@@ -24,7 +24,7 @@ You can get them by following [Telegram API Documentation](https://my.telegram.o
 API_ID=1234567
 API_HASH=0123456789abcdef0123456789abcdef
 STRING_SESSION=""  # optional: can leave empty if you want to login manually
-
+```
 
 ## Installation
 
@@ -131,3 +131,16 @@ You have to login for the first time using your phone number (inter-national for
 
 A session file called `forwarder.session` will be generated. 
 **Please don't delete this and make sure to keep this file secret.**
+
+## 💖 Special Thanks
+
+A huge thanks to the amazing open-source projects that inspired and made this work possible:
+
+- [**telegram-chat-forward**](https://github.com/aahnik/telegram-chat-forward) — by [@aahnik](https://github.com/aahnik)  
+  > A simple script using Telethon to forward messages from one chat to another.
+
+- [**tgcf**](https://github.com/aahnik/tgcf) — by [@aahnik](https://github.com/aahnik)  
+  > A powerful, advanced Telegram message forwarder with real-time and static forwarding modes.
+
+Your contributions to the open-source community are truly appreciated! 🙏
+
