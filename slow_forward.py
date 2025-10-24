@@ -93,3 +93,4 @@ Please star 🌟 on [GitHub](https://github.com/aahnik/telegram-chat-forward).
 if __name__ == "__main__":
     assert forwards, "No forwards configured in settings.py"
     asyncio.run(forward_job())
+
