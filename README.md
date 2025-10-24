@@ -2,6 +2,12 @@
 
 A simple script to forward all the messages of one chat (indivisual/group/channel) to another. Made using Telethon. Can be used to back up the contents of a chat to another place.
 
+<p align="center">
+  <img src="img/image.png" alt="Alt text" />
+</p>
+
+
+
 ## Signing In
 
 To use this Telegram forwarder, you need your Telegram account’s **API credentials**:
