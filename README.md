@@ -3,7 +3,7 @@
 A simple script to forward all the messages of one chat (indivisual/group/channel) to another. Made using Telethon. Can be used to back up the contents of a chat to another place.
 
 <p align="center">
-  <img src="img/image.png" alt="showing forwarding terminal log" />
+  <img src="https://raw.githubusercontent.com/its-anya/telegram-all-forward/refs/heads/main/img/image.png" alt="showing forwarding terminal log" />
 </p>
 
 
