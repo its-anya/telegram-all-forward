@@ -123,4 +123,5 @@ python forwarder.py
 
 You have to login for the first time using your phone number (inter-national format) and login code.
 
-A session file called `forwarder.session` will be generated. **Please don't delete this and make sure to keep this file secret.**
+A session file called `forwarder.session` will be generated. 
+**Please don't delete this and make sure to keep this file secret.**
