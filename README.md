@@ -17,7 +17,7 @@ You can get them by following [Telegram API Documentation](https://my.telegram.o
 API_ID=1234567
 API_HASH=0123456789abcdef0123456789abcdef
 STRING_SESSION=""  # optional: can leave empty if you want to login manually
-
+```
 
 ## Installation
 
