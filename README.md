@@ -126,7 +126,7 @@ After setting up the `config.ini`, run the `forwarder.py` script.
 ```shell
 python forwarder.py
 ```
-
+In my case is slow_forward.py is a best without flood wait.
 You have to login for the first time using your phone number (inter-national format) and login code.
 
 A session file called `forwarder.session` will be generated. 
