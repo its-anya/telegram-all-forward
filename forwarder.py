@@ -70,12 +70,14 @@ async def forward_job():
         input(confirm)
 
         error_occured = False
+        offset_reports = []  # Collect per-forward final offsets for summary
         for forward in forwards:
             from_chat, to_chat, offset = get_forward(forward)
 
             if not offset:
                 offset = 0
 
+            initial_offset = offset
             last_id = 0
 
             async for message in client.iter_messages(intify(from_chat), reverse=True, offset_id=offset):
@@ -98,6 +100,13 @@ async def forward_job():
                     break
 
             logging.info('Completed working with %s', forward)
+            # Record final offset for this mapping (last_id if forwarded, else initial)
+            final_offset = last_id if last_id else str(initial_offset)
+            offset_reports.append({
+                'from': from_chat,
+                'to': to_chat,
+                'final_offset': final_offset
+            })
 
         # Send config file with flood wait handling
         try:
@@ -106,9 +115,18 @@ async def forward_job():
             logging.error(f'Failed to send config file: {err}')
 
         message = 'Your forward job has completed.' if not error_occured else 'Some errors occured. Please see the output on terminal. Contact Developer.'
+        # Build offsets summary text
+        if len(offset_reports) == 1:
+            offset_summary_text = f"Your offset number is {offset_reports[0]['final_offset']}"
+        else:
+            lines = [f"- {r['from']} → {r['to']}: {r['final_offset']}" for r in offset_reports]
+            offset_summary_text = "Your offset numbers:\n" + "\n".join(lines)
+
         final_message = f'''Hi !
         \n**{message}**
-        \n**Telegram All Forward** is developed by @its-Anya.
+        \n{offset_summary_text}
+        \nTo resume later, edit the corresponding offset in config.ini to this number.
+        \n**Telegram All Forward** is developed by OpenSource Dev.
         \nPlease star 🌟 on [GitHub](https://github.com/its-anya/telegram-all-forward.git).
         {SENT_VIA}'''
         
