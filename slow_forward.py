@@ -45,10 +45,12 @@ Press [ENTER] to continue:'''
         input(confirm)
 
         error_occurred = False
+        offset_reports = []  # Collect per-forward final offsets for the summary
 
         for forward in forwards:
             from_chat, to_chat, offset = get_forward(forward)
             offset = offset or 0
+            initial_offset = offset
             last_id = 0
 
             async for message in client.iter_messages(intify(from_chat), reverse=True, offset_id=offset):
@@ -69,6 +71,13 @@ Press [ENTER] to continue:'''
                     break
 
             logging.info('Completed forward job for %s', forward)
+            # Record final offset for this mapping (last_id if forwarded, else initial)
+            final_offset = last_id if last_id > 0 else initial_offset
+            offset_reports.append({
+                'from': from_chat,
+                'to': to_chat,
+                'final_offset': final_offset
+            })
 
         # Send config file safely
         try:
@@ -76,12 +85,20 @@ Press [ENTER] to continue:'''
         except Exception as err:
             logging.error(f'Failed to send config file: {err}')
 
-        # Send final summary message
+        # Build offsets summary text
+        if len(offset_reports) == 1:
+            offset_summary_text = f"Your offset number is {offset_reports[0]['final_offset']}"
+        else:
+            lines = [f"- {r['from']} → {r['to']}: {r['final_offset']}" for r in offset_reports]
+            offset_summary_text = "Your offset numbers:\n" + "\n".join(lines)
+
+        # Send final summary message with offsets
         final_message = f"""
 Hi!
 **{'Your forward job has completed.' if not error_occurred else 'Some errors occurred. Check terminal output.'}**
-**Telegram Chat Forward** is developed by @AahnikDaw.
-Please star 🌟 on [GitHub](https://github.com/aahnik/telegram-chat-forward).
+{offset_summary_text}
+**Telegram Chat Forward** is developed by OpenSource Dev.
+Please star 🌟 on [GitHub](https://github.com/its-anya/telegram-all-forward).
 {SENT_VIA}
 """
         try:
@@ -93,4 +110,3 @@ Please star 🌟 on [GitHub](https://github.com/aahnik/telegram-chat-forward).
 if __name__ == "__main__":
     assert forwards, "No forwards configured in settings.py"
     asyncio.run(forward_job())
-
